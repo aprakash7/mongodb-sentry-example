@@ -12,15 +12,16 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories(basePackages = "com.aprakash.grocerymongodb")
-public class GrocerymongodbApplication implements CommandLineRunner {
+public class GrocerymongodbApplication {
 
-	@Autowired
-	ItemRepository groceryItemRepo;
+//	@Autowired
+	// ItemRepository groceryItemRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(GrocerymongodbApplication.class, args);
 	}
 
+	/*
 	//CREATE
 	void createGroceryItems() {
 		System.out.println("Data creation started...");
@@ -129,6 +130,7 @@ public class GrocerymongodbApplication implements CommandLineRunner {
 
 		System.out.println("\n-------------------THANK YOU---------------------------");
 
-	}
+
+	 */
 
 }
