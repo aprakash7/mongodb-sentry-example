@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface ItemRepository extends MongoRepository<GroceryItem, String> {
 
     @Query("{name: '?0'}")
     GroceryItem findItemByName(String name);
 
-    @Query(value = "{category: '?0'}", fields = "{'name' : 1, 'quantity' : 1}")
+    @Query(value = "{category: '?0'}")
     List<GroceryItem> findAll(String category);
 
 }

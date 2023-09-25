@@ -1,20 +1,21 @@
 package com.aprakash.grocerymongodb.web;
 
 import com.aprakash.grocerymongodb.dto.GroceryDto;
+import com.aprakash.grocerymongodb.responses.GroceryItemsCountResponse;
 import com.aprakash.grocerymongodb.model.GroceryItem;
-import com.aprakash.grocerymongodb.repository.ItemRepository;
+import com.aprakash.grocerymongodb.responses.ItemByNameResponse;
+import com.aprakash.grocerymongodb.responses.ItemsByCategoryResponse;
 import com.aprakash.grocerymongodb.services.GroceryService;
+import io.sentry.Sentry;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class GroceryController {
-
-    // ItemRepository groceryItemRepo;
 
     @Autowired
     GroceryService groceryService;
@@ -25,9 +26,19 @@ public class GroceryController {
     }
 
     @GetMapping("/count")
-    public long groceryItemsCount() {
-        System.out.println(groceryService.itemsCount());
+    public GroceryItemsCountResponse groceryItemsCount() {
+        Sentry.setTransaction("Groceries Count transaction");
+        Sentry.addBreadcrumb("Gonna count all items now... ");
         return groceryService.itemsCount();
     }
 
+    @GetMapping("/items/category/{category}")
+    public ItemsByCategoryResponse<GroceryItem> getItemsByCategory(@PathVariable @Valid String category) {
+        return groceryService.getItemsByCategory(category);
+    }
+
+    @GetMapping("items/name/{name}")
+    public ItemByNameResponse getItemByName(@PathVariable @Valid String name) {
+        return groceryService.getItemByName(name);
+    }
 }
